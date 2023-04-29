@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
-
+import '@lrnwebcomponents/simple-icon/simple-icon.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import "@lrnwebcomponents/a11y-collapse/a11y-collapse.js";
+import "@lrnwebcomponents/a11y-collapse/lib/a11y-collapse-group.js";
 
 
 class ProjectThree extends LitElement {
@@ -16,6 +19,7 @@ class ProjectThree extends LitElement {
     },
     courses: { type: String 
     },
+    opened: {type: Boolean, reflect: true, attribute: 'expanded-if'},
   }
 
   static styles = css` 
@@ -62,24 +66,15 @@ class ProjectThree extends LitElement {
         display: flex;
         flex-direction: row;
         gap: 1rem;
-        padding: 0px;
+        padding-top: 20px;
       }
-      .collapse-tab {
-        box-sizing: border-box;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-        font-weight: 700;
-        letter-spacing: -0.1px;
-        padding: 10px;
-        position:relative; top:-8px;
-        position:relative; left:-10px;
-      }
-      .collapse-tab:hover {
-        padding: 10px;
-        background-color: #b3ccf2;
-        border-radius: 5px;
-        text-decoration: underline;
-      }
+
+
+      
+
+      
+
+     
   `;
 
   constructor() {
@@ -89,6 +84,19 @@ class ProjectThree extends LitElement {
     this.title = 'Misconceptions about happiness';
     this.info = 'In this module, you will learn what it means to be happy and why pursuing happiness is not a pointless endeavor. Dr. Santos addresses how our minds lie to us and how the science shows that our misconceptions about money, grades, and social media are holding us back from implementing the techniques studied in positive psychology.';
     this.courses = '4 videos (Total 30 min), 0 readings, 1 quiz';
+    this.videos = "4";
+    this.readings = "0";
+    this.quizzes = "0";
+    this.opened = false;
+  }
+
+  __collapseStatusChange() {
+    const status = this.shadowRoot.querySelector("a11y-collapse");
+    if (status.hasAttribute("expanded")) {
+      this.opened = "See less";
+    } else {
+      this.opened = "See all";
+    }
   }
 
   render() {
@@ -99,16 +107,29 @@ class ProjectThree extends LitElement {
         <p class="week-date">${this.weekDate}</p>
       </div>
         <div class="description">
-          <p class="time">${this.completionTime} hours to complete</p>
+          <p class="time"><simple-icon icon="watch-later"></simple-icon>${this.completionTime} hours to complete</p>
           <p class="title">${this.title}</p>
           <p class="info">${this.info}</p>
         <div class="collapse">
-          <p class="courses">${this.courses}</p>
-          <p class="collapse-tab">See All</p>
+          <p class="courses"><simple-icon icon="communication:import-contacts"></simple-icon>${this.courses}</p>
+          <a11y-collapse heading-button class="details-collapse">
+      <p slot="heading" class="details-title">${this.collapseButton}</p>
+        <div class="details-wrapper">
+          <div class="details-video-text"><simple-icon class="details-video-icon" icon="av:slow-motion-video"></simple-icon>${this.videos} Videos</div>
+            <div class="details-video-items">
+            </div>
+            <hr>
+          <div class="details-reading-text"><simple-icon class="details-reading-icon" icon="chrome-reader-mode"></simple-icon>${this.readings} Readings</div>
+            <div class="details-reading-items"></div>
+            <hr>
+          <div class="details-quiz-text"><simple-icon class="details-quiz-icon" icon="assignment"></simple-icon>${this.quizzes} Quizzes</div>
+        </div>
+      </a11y-collapse>
         </div>
           <hr>
       </div>
   </div>
+  
     `;
   }
 }
