@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import "./project-three.js"
+import { IntersectionObserverMixin } from "@lrnwebcomponents/intersection-element/lib/IntersectionObserverMixin.js";
 
 
 export class WeekOutline extends IntersectionObserverMixin(LitElement) {
@@ -11,7 +12,7 @@ export class WeekOutline extends IntersectionObserverMixin(LitElement) {
         return {
             ...props,
             weeks: { type: Array },
-            // school: { type: String }
+            
         }
     }
     
@@ -26,7 +27,7 @@ export class WeekOutline extends IntersectionObserverMixin(LitElement) {
     }
 
     updateWeek() {
-        const address = '../api/outline';
+        const address = './api/outline';
         fetch(address).then((response) => {
             if (response.ok) {
                 return response.json()
