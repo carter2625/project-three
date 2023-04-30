@@ -19,10 +19,13 @@ class ProjectThree extends LitElement {
     },
     courses: { type: String 
     },
-    opened: {type: Boolean, reflect: true, attribute: 'expanded-if'},
+    opened: {type: Boolean, reflect: true, attribute: 'opened-if'},
   }
 
   static styles = css` 
+      :host([opened-if]) .wrapper {
+        ;
+      }
       .calender {
         display: flex;
         flex-direction: row;
@@ -90,12 +93,12 @@ class ProjectThree extends LitElement {
     this.opened = false;
   }
 
-  __collapseStatusChange() {
+  collapseStatusChange() {
     const status = this.shadowRoot.querySelector("a11y-collapse");
-    if (status.hasAttribute("expanded")) {
-      this.opened = "See less";
+    if (status.hasAttribute("opened")) {
+      this.opened = "See Less";
     } else {
-      this.opened = "See all";
+      this.opened = "See All";
     }
   }
 
@@ -112,17 +115,17 @@ class ProjectThree extends LitElement {
           <p class="info">${this.info}</p>
         <div class="collapse">
           <p class="courses"><simple-icon icon="communication:import-contacts"></simple-icon>${this.courses}</p>
-          <a11y-collapse heading-button class="details-collapse">
-      <p slot="heading" class="details-title">${this.collapseButton}</p>
-        <div class="details-wrapper">
-          <div class="details-video-text"><simple-icon class="details-video-icon" icon="av:slow-motion-video"></simple-icon>${this.videos} Videos</div>
-            <div class="details-video-items">
+          <a11y-collapse heading-button @expand="${this.collapseStatusChange}" @collapse="${this.collapseStatusChange}" class="details-collapse">
+            <p class="show-title">${this.opened}</p>
+        <div class="show-wrapper">
+          <div class="show-video-text"><simple-icon class="video-logo" icon="av:slow-motion-video"></simple-icon>${this.videos} Videos</div>
+            <div class="show-video-items">
             </div>
             <hr>
-          <div class="details-reading-text"><simple-icon class="details-reading-icon" icon="chrome-reader-mode"></simple-icon>${this.readings} Readings</div>
-            <div class="details-reading-items"></div>
+          <div class="show-reading"><simple-icon class="reading-logo" icon="chrome-reader-mode"></simple-icon>${this.readings} Readings</div>
+            <div class="show-reading-items"></div>
             <hr>
-          <div class="details-quiz-text"><simple-icon class="details-quiz-icon" icon="assignment"></simple-icon>${this.quizzes} Quizzes</div>
+          <div class="show-quizzes"><simple-icon class="quiz-logo" icon="assignment"></simple-icon>${this.quizzes} Quizzes</div>
         </div>
       </a11y-collapse>
         </div>
