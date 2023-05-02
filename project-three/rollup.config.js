@@ -56,7 +56,14 @@ export default {
       ],
     }),
 
-    
+    copy({
+      targets: [
+        {
+          src: 'node_modules/@lrnwebcomponents/simple-icon/lib/svgs',
+          dest: 'dist',
+        },
+      ],
+    }),
 
 
 

@@ -27,7 +27,7 @@ export class WeekOutline extends IntersectionObserverMixin(LitElement) {
     }
 
     updateWeek() {
-        const address = './api/outline';
+        const address = '../api/outline.js';
         fetch(address).then((response) => {
             if (response.ok) {
                 return response.json()
@@ -55,7 +55,7 @@ export class WeekOutline extends IntersectionObserverMixin(LitElement) {
         <div class="wrapper">
             ${this.weeks.map(week => html`
             <div class="item">
-                <project-three weekDate="${week.weekDate}" completionTime="${week.completionTime}" title="${week.title}" info="${week.info}" courses="${week.courses}" videos="${week.videos}" readings="${week.readings}" quizzes="${week.readings}"></project-three>
+                <project-three weekDate="${week.weekDate}" completionTime="${week.completionTime}" title="${week.title}" info="${week.info}" courses="${week.courses}" videos="${week.videos}" readings="${week.readings}" quizzes="${week.readings}" taskList="${week.taskList}"></project-three>
             </div>
             `)}
         </div>

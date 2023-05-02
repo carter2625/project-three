@@ -19,7 +19,6 @@ class ProjectThree extends LitElement {
     },
     courses: { type: String 
     },
-    opened: {type: Boolean, reflect: true, attribute: 'opened-if'},
   }
 
   static styles = css` 
@@ -90,17 +89,9 @@ class ProjectThree extends LitElement {
     this.videos = "4";
     this.readings = "0";
     this.quizzes = "0";
-    this.opened = false;
+    this.taskList = "Task List"
   }
 
-  collapseStatusChange() {
-    const status = this.shadowRoot.querySelector("a11y-collapse");
-    if (status.hasAttribute("opened")) {
-      this.opened = "See Less";
-    } else {
-      this.opened = "See All";
-    }
-  }
 
   render() {
     return html`
@@ -115,8 +106,8 @@ class ProjectThree extends LitElement {
           <p class="info">${this.info}</p>
         <div class="collapse">
           <p class="courses"><simple-icon icon="communication:import-contacts"></simple-icon>${this.courses}</p>
-          <a11y-collapse heading-button @expand="${this.collapseStatusChange}" @collapse="${this.collapseStatusChange}" class="details-collapse">
-            <p class="show-title">${this.opened}</p>
+          <a11y-collapse heading-button class="details-collapse">
+            <p slot="heading" class="show-title">${this.taskList}</p>
         <div class="show-wrapper">
           <div class="show-video-text"><simple-icon class="video-logo" icon="av:slow-motion-video"></simple-icon>${this.videos} Videos</div>
             <div class="show-video-items">
