@@ -18,13 +18,12 @@ class ProjectThree extends LitElement {
     info: { type: String 
     },
     courses: { type: String 
-    },
+    }, 
+    opened: {type: Boolean, reflect: true, attribute: 'opened-if'},
   }
 
   static styles = css` 
-      :host([opened-if]) .wrapper {
-        ;
-      }
+      
       .calender {
         display: flex;
         flex-direction: row;
@@ -69,14 +68,7 @@ class ProjectThree extends LitElement {
         flex-direction: row;
         gap: 1rem;
         padding-top: 20px;
-      }
-
-
-      
-
-      
-
-     
+      }  
   `;
 
   constructor() {
@@ -89,7 +81,16 @@ class ProjectThree extends LitElement {
     this.videos = "4";
     this.readings = "0";
     this.quizzes = "0";
-    this.taskList = "Task List"
+    this.opened = false;
+  }
+
+  collapseStatusChange() {
+    const status = this.shadowRoot.querySelector("a11y-collapse");
+    if (status.hasAttribute("expanded")) {
+      this.opened = "See less";
+    } else {
+      this.opened = "See all";
+    }
   }
 
 
@@ -106,8 +107,9 @@ class ProjectThree extends LitElement {
           <p class="info">${this.info}</p>
         <div class="collapse">
           <p class="courses"><simple-icon icon="communication:import-contacts"></simple-icon>${this.courses}</p>
-          <a11y-collapse heading-button class="details-collapse">
-            <p slot="heading" class="show-title">${this.taskList}</p>
+          <a11y-collapse heading-button @expand="${this.collapseStatusChange}"
+              @collapse="${this.collapseStatusChange}">
+            <p slot="heading" class="show-title">${this.opened}</p>
         <div class="show-wrapper">
           <div class="show-video-text"><simple-icon class="video-logo" icon="av:slow-motion-video"></simple-icon>${this.videos} Videos</div>
             <div class="show-video-items">
